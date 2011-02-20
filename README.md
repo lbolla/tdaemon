@@ -111,3 +111,6 @@ with a total archive of more than 100MB.
         commands, but the only way to do so is to send arguments rather than the
         whole external command. Tests must pass, though (no `&`, for example)
 
+### Forked
+
+Forked from [Bruno Bord's tdaemon](https://github.com/brunobord/tdaemon) to add support for Python3.
