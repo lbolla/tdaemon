@@ -16,7 +16,12 @@ import os
 import optparse
 from time import sleep
 import hashlib
-import commands
+try:
+	# py2
+	from commands import getoutput
+except ImportError:
+	# py3
+	from subprocess import getoutput
 import datetime
 
 IGNORE_EXTENSIONS = ('pyc', 'pyo')
@@ -42,7 +47,7 @@ class CancelDueToUserRequest(Exception):
 def ask(message='Are you sure? [y/N]'):
     """Asks the user his opinion."""
     agree = False
-    answer = raw_input(message).lower()
+    answer = input(message).lower()
     if answer.startswith('y'):
         agree = True
     return agree
@@ -164,7 +169,7 @@ class Watcher(object):
                     if os.path.isfile(full_path):
                         # preventing fail if the file vanishes
                         content = open(full_path).read()
-                        hashcode = hashlib.sha224(content).hexdigest()
+                        hashcode = hashlib.sha224(content.encode('utf8')).hexdigest()
                         file_list[full_path] = hashcode
             for name in dirs:
                 if name not in IGNORE_DIRS:
@@ -181,15 +186,15 @@ class Watcher(object):
         """Extracts differences between lists. For debug purposes"""
         for key in list1:
             if key in list2 and list2[key] != list1[key]:
-                print key
+                print(key)
             elif key not in list2:
-                print key
+                print(key)
 
     def run(self, cmd):
         """Runs the appropriate command"""
-        print datetime.datetime.now()
-        output = commands.getoutput(cmd)
-        print output
+        print(datetime.datetime.now())
+        output = getoutput(cmd)
+        print(output)
 
     def run_tests(self):
         """Execute tests"""
@@ -243,12 +248,12 @@ def main(prog_args=None):
             if not ask(message):
                 raise CancelDueToUserRequest('Ok, thx, bye...')
 
-        print "Ready to watch file changes..."
+        print("Ready to watch file changes...")
         watcher.loop()
-    except Exception, msg:
-        print msg
+    except Exception as msg:
+        print(msg)
 
-    print "Bye"
+    print("Bye")
 
 if __name__ == '__main__':
     main()
