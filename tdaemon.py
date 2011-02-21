@@ -24,7 +24,7 @@ except ImportError:
 	from subprocess import getoutput
 import datetime
 
-IGNORE_EXTENSIONS = ('pyc', 'pyo')
+IGNORE_EXTENSIONS = ('pyc', 'pyo', 'coverage')
 IGNORE_DIRS = ('.bzr', '.git', '.hg', '.darcs', '.svn')
 IMPLEMENTED_TEST_PROGRAMS = ('nose', 'nosetests', 'django', 'py', 'symfony',
     'jelix',
