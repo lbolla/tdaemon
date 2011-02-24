@@ -25,7 +25,7 @@ except ImportError:
 import datetime
 
 IGNORE_EXTENSIONS = ('pyc', 'pyo', 'coverage')
-IGNORE_DIRS = ('.bzr', '.git', '.hg', '.darcs', '.svn')
+IGNORE_DIRS = ('.bzr', '.git', '.hg', '.darcs', '.svn', 'examples', 'db')
 IMPLEMENTED_TEST_PROGRAMS = ('nose', 'nosetests', 'django', 'py', 'symfony',
     'jelix',
 )
@@ -47,7 +47,7 @@ class CancelDueToUserRequest(Exception):
 def ask(message='Are you sure? [y/N]'):
     """Asks the user his opinion."""
     agree = False
-    answer = input(message).lower()
+    answer = raw_input(message).lower()
     if answer.startswith('y'):
         agree = True
     return agree
